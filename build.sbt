@@ -8,6 +8,8 @@ val funTicTacToe = (project in file(".")).enablePlugins(plugins.JUnitXmlReportPl
 
 parallelExecution in Test := true
 
+mainClass := Some("TicTacToe")
+
 libraryDependencies ++= Seq(
 	"com.google.inject" % "guice" % "3.0",
 	"com.google.guava" % "guava" % "19.0",
