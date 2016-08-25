@@ -22,11 +22,22 @@ public class BoardHelper {
   }
 
   /**
+   * Generate a default starting board for N = 3.
    * Each "cell" may belong to a player or not belong to any player, hence the usage of Optional<Player>
    * @return List<Optional<Player>>
      */
   public static List<Optional<Player>> defaultBoard() {
     return Stream.generate(Optional::<Player>empty).limit(DEFAULT_BOARD_SIZE).collect(Collectors.toList());
+  }
+
+  /**
+   * Generate a default starting board for N = sqrt(boardSize). This method requires boardSize
+   * to be a square number.
+   * Each "cell" may belong to a player or not belong to any player, hence the usage of Optional<Player>
+   * @return List<Optional<Player>>
+   */
+  public static List<Optional<Player>> defaultBoard(int boardSize) {
+    return Stream.generate(Optional::<Player>empty).limit(boardSize).collect(Collectors.toList());
   }
 
   /**
@@ -43,17 +54,26 @@ public class BoardHelper {
     final Collection<List<Integer>> rowIndices =
             IntStream.range(0, boardSize).boxed().collect(Collectors.groupingBy(i -> i / rowSize)).values();
 
-    final List<Integer> leftToRightDiagonalIndices =
-            IntStream.rangeClosed(0, rowSize - 1).map(i -> i * (rowSize + 1)).boxed().collect(Collectors.toList());
+    final Collection<List<Integer>> leftToRightDiagonalIndices =
+            IntStream.range(0, boardSize).boxed().collect(Collectors.groupingBy(i -> {
+              final int row = i / rowSize;
+              final int col = i % rowSize;
+              return row - col;
+            })).values();
 
-    final List<Integer> rightToLeftDiagonalIndices =
-            IntStream.rangeClosed(1, rowSize).map(i -> i * (rowSize - 1)).boxed().collect(Collectors.toList());
+    final Collection<List<Integer>> rightToLeftDiagonalIndices =
+            IntStream.range(0, boardSize).boxed().collect(Collectors.groupingBy(i -> {
+              final int row = i / rowSize;
+              final int col = i % rowSize;
+              return row + col;
+            })).values();
+
 
     return ImmutableList.<List<Integer>>builder()
             .addAll(columnIndices)
             .addAll(rowIndices)
-            .add(leftToRightDiagonalIndices)
-            .add(rightToLeftDiagonalIndices)
+            .addAll(leftToRightDiagonalIndices)
+            .addAll(rightToLeftDiagonalIndices)
             .build();
   }
 

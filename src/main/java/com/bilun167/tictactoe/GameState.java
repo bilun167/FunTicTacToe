@@ -8,8 +8,9 @@ public class GameState {
   private final Board board;
   private final Player currentPlayer;
 
-  public GameState() {
-    this(new Board(), DEFAULT_FIRST_PLAYER);
+  public GameState(Board board) {
+    this.board = board;
+    this.currentPlayer = DEFAULT_FIRST_PLAYER;
   }
 
   public GameState(Board board, Player currentPlayer) {
