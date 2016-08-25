@@ -4,7 +4,7 @@ version := "1.0"
 
 scalaVersion := "2.11.8"
 
-val myProject = (project in file(".")).enablePlugins(plugins.JUnitXmlReportPlugin)
+val funTicTacToe = (project in file(".")).enablePlugins(plugins.JUnitXmlReportPlugin)
 
 parallelExecution in Test := true
 
@@ -13,6 +13,7 @@ libraryDependencies ++= Seq(
 	"com.google.guava" % "guava" % "19.0",
 	"com.google.guava" % "guava-collections" % "r03",
 	
+	"org.pcollections" % "pcollections" % "2.1.2",
 	"ch.qos.logback" % "logback-classic" % "1.1.7",
 
 	"com.fasterxml.jackson.core" % "jackson-core" % "2.8.0",
