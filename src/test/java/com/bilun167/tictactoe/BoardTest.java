@@ -29,8 +29,8 @@ public class BoardTest {
   public void testSparseBoardLargeHasNoWinner() {
     Board board = BoardDsl.board(
         BoardDsl.x(),     BoardDsl.empty(), BoardDsl.empty(), BoardDsl.empty(), BoardDsl.empty(),
-        BoardDsl.empty(), BoardDsl.o(),     BoardDsl.empty(), BoardDsl.x(),     BoardDsl.o(),
-        BoardDsl.empty(), BoardDsl.empty(), BoardDsl.x(),     BoardDsl.empty(), BoardDsl.empty(),
+        BoardDsl.empty(), BoardDsl.o(),     BoardDsl.empty(), BoardDsl.x(),     BoardDsl.x(),
+        BoardDsl.empty(), BoardDsl.empty(), BoardDsl.o(),     BoardDsl.empty(), BoardDsl.empty(),
         BoardDsl.empty(), BoardDsl.empty(), BoardDsl.x(),     BoardDsl.empty(), BoardDsl.empty(),
         BoardDsl.empty(), BoardDsl.empty(), BoardDsl.x(),     BoardDsl.empty(), BoardDsl.o()
     );
@@ -73,7 +73,7 @@ public class BoardTest {
         BoardDsl.x(),     BoardDsl.empty(), BoardDsl.empty(), BoardDsl.empty(), BoardDsl.o(),
         BoardDsl.empty(), BoardDsl.o(),     BoardDsl.empty(), BoardDsl.x(),     BoardDsl.o(),
         BoardDsl.empty(), BoardDsl.empty(), BoardDsl.x(),     BoardDsl.empty(), BoardDsl.o(),
-        BoardDsl.empty(), BoardDsl.empty(), BoardDsl.x(),     BoardDsl.empty(), BoardDsl.o(),
+        BoardDsl.empty(), BoardDsl.empty(), BoardDsl.o(),     BoardDsl.empty(), BoardDsl.x(),
         BoardDsl.empty(), BoardDsl.empty(), BoardDsl.x(),     BoardDsl.empty(), BoardDsl.o()
     );
     assertEquals(BoardDsl.o(), board.findWinner());

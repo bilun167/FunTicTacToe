@@ -2,6 +2,7 @@ package com.bilun167.tictactoe;
 
 import com.bilun167.tictactoe.exception.IllegalBoardException;
 import com.bilun167.tictactoe.exception.IllegalMoveException;
+import com.bilun167.tictactoe.slider.CustomCollectors;
 import com.google.common.base.Strings;
 import org.pcollections.PVector;
 import org.pcollections.TreePVector;
@@ -18,8 +19,14 @@ public class Board {
   // List of rows, cols, diagonals
   private final List<List<Integer>> consecutiveIndices;
 
+  public static final int COUNT_TO_WIN = 3;
+
   public Board() {
     this(BoardHelper.defaultBoard());
+  }
+
+  public Board(int boardSize) {
+    this(BoardHelper.defaultBoard(boardSize));
   }
 
   public Board(List<Optional<Player>> board) {
@@ -92,7 +99,18 @@ public class Board {
   }
 
   private Optional<Player> findWinningPlayer(List<Integer> indices) {
-    final Stream<Optional<Player>> occupants = indices.stream().map(i -> board.get(i));
-    return occupants.reduce((a, b) -> a.equals(b) ? a : Optional.empty()).orElseGet(Optional::empty);
+    if (indices.size() < COUNT_TO_WIN)
+      return Optional.empty();
+
+    final Stream<Optional<Player>> occupants = indices.stream().map(board::get);
+    final List<List<Optional<Player>>> combinations = occupants.collect(CustomCollectors.sliding(COUNT_TO_WIN));
+    for (final List<Optional<Player>> comb : combinations) {
+      Optional<Player> winner = comb.stream()
+              .reduce((a, b) -> a.equals(b) ? a : Optional.empty())
+              .orElseGet(Optional::empty);
+      if (winner.isPresent())
+        return winner;
+    }
+    return Optional.empty();
   }
 }

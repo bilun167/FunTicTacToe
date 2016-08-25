@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 public class TicTacToe {
   public void play() {
     final GameState finishedGame = Stream
-        .iterate(new GameState(), this::turn)
+        .iterate(start(), this::turn)
         .filter(GameState::isGameOver)
         .findFirst()
         .orElseThrow(() -> new IllegalStateException("Game did not complete!"));
@@ -20,6 +20,16 @@ public class TicTacToe {
     System.out.println();
     System.out.println(finishedGame);
     System.out.println(winner.map(player -> "Player " + player + " wins!").orElseGet(() -> "It's a tie!"));
+  }
+
+  private GameState start() {
+    System.out.println();
+    System.out.println("Please enter board size (i.e, N = 3, N = 4, ...)");
+    final int inputN = new Scanner(System.in).nextInt();
+    final int boardSize = inputN * inputN;
+
+    final Board board = new Board(boardSize);
+    return new GameState(board);
   }
 
   private GameState turn(GameState gameState) {

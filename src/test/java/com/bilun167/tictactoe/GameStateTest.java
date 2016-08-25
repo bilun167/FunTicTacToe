@@ -12,7 +12,7 @@ public class GameStateTest {
 
   @Test
   public void testEmptyGameIsNotOver() {
-    GameState gameState = new GameState();
+    GameState gameState = new GameState(new Board());
     assertFalse(gameState.isGameOver());
   }
 
@@ -90,7 +90,7 @@ public class GameStateTest {
 
   @Test
   public void testMakeMoveEmptyGame() {
-    GameState gameState = new GameState();
+    GameState gameState = new GameState(new Board());
 
     Board expectedBoard = board(
         empty(), empty(), empty(),
@@ -126,7 +126,7 @@ public class GameStateTest {
 
   @Test(expected = IllegalMoveException.class)
   public void testMakeMoveOutOfBounds() {
-    GameState gameState = new GameState();
+    GameState gameState = new GameState(new Board());
     gameState.makeMove(12);
   }
 
